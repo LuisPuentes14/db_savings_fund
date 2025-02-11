@@ -71,7 +71,7 @@ CREATE TABLE loans
     granted_date DATE           NOT NULL,
     loan_amount  NUMERIC(10, 2) NOT NULL,
     term_months  INT CHECK (term_months BETWEEN 1 AND 60),
-    status       VARCHAR(10) CHECK (status IN ('ACTIVE', 'PAID')) DEFAULT 'ACTIVE',
+    status       VARCHAR(10) CHECK (status IN ('ACTIVO', 'PAGADO')) DEFAULT 'ACTIVO',
     FOREIGN KEY (employee_id) REFERENCES employees (employee_id) ON DELETE CASCADE
 );
 
@@ -83,7 +83,7 @@ CREATE TABLE loan_installments
     number_installment INT NOT NULL,
     date_payment       TIMESTAMP,
     amount             NUMERIC(10, 2),
-    status             VARCHAR(10) CHECK (status IN ('ACTIVE', 'PAID')) DEFAULT 'ACTIVE'
+    status             VARCHAR(10) CHECK (status IN ('ACTIVO', 'PAGADO')) DEFAULT 'ACTIVO'
 );
 
 -- Tabla que registra las compras realizadas por los empleados en los negocios asociados
