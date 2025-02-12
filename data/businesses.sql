@@ -1,0 +1,2 @@
+INSERT INTO public.businesses (business_id, name, address, status, created_by, updated_by, created_date, update_date) VALUES (1, 'Tienda Electrodomésticos', 'Avenida Principal #34-56', true, 'admin', null, '2025-02-12 14:14:00.631649', null);
+INSERT INTO public.businesses (business_id, name, address, status, created_by, updated_by, created_date, update_date) VALUES (2, 'Supermercado Ahorro', 'Calle 8 #12-34', true, 'admin', null, '2025-02-12 14:14:00.631649', null);

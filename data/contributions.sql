@@ -1,0 +1,5 @@
+INSERT INTO public.contributions (contribution_id, employee_id, contribution_date, savings_amount, created_by, created_date) VALUES (1, 1, '2024-02-01', 200.00, 'admin', '2025-02-12 14:13:57.824476');
+INSERT INTO public.contributions (contribution_id, employee_id, contribution_date, savings_amount, created_by, created_date) VALUES (2, 2, '2024-02-01', 150.00, 'admin', '2025-02-12 14:13:57.824476');
+INSERT INTO public.contributions (contribution_id, employee_id, contribution_date, savings_amount, created_by, created_date) VALUES (3, 3, '2024-02-01', 250.00, 'admin', '2025-02-12 14:13:57.824476');
+INSERT INTO public.contributions (contribution_id, employee_id, contribution_date, savings_amount, created_by, created_date) VALUES (4, 4, '2024-02-01', 300.00, 'admin', '2025-02-12 14:13:57.824476');
+INSERT INTO public.contributions (contribution_id, employee_id, contribution_date, savings_amount, created_by, created_date) VALUES (5, 5, '2024-02-01', 180.00, 'admin', '2025-02-12 14:13:57.824476');

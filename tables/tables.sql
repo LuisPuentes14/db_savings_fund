@@ -56,15 +56,16 @@ CREATE TABLE businesses
 );
 
 -- Tabla que almacena los tipos de prestamos
-CREATE TABLE loan_types
+CREATE TABLE charges
 (
-    loan_type_id     SERIAL PRIMARY KEY,
+    charge_id        SERIAL PRIMARY KEY,
     name             VARCHAR(20),
-    monthly_interest NUMERIC(5, 2) DEFAULT 1.00, -- 1% de interés mensual
-    term_months      INT CHECK (term_months BETWEEN 1 AND 60),
+    monthly_interest NUMERIC(5, 2)                            DEFAULT 1.00, -- 1% de interés mensual
+    term_months      INT CHECK (term_months BETWEEN 0 AND 60) DEFAULT 0,
+    type_charge      VARCHAR(50) CHECK ( type_charge IN ('PRESTAMO', 'DEFECTO') ),
     created_by       VARCHAR(255),
     updated_by       VARCHAR(255),
-    created_date     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+    created_date     TIMESTAMP                                DEFAULT CURRENT_TIMESTAMP,
     update_date      TIMESTAMP
 );
 
@@ -72,7 +73,7 @@ CREATE TABLE loan_types
 CREATE TABLE loans
 (
     loan_id      SERIAL PRIMARY KEY,
-    loan_type_id INT REFERENCES loan_types (loan_type_id),
+    loan_type_id INT REFERENCES charges (charge_id),
     employee_id  INT            NOT NULL,
     granted_date DATE           NOT NULL,
     loan_amount  NUMERIC(10, 2) NOT NULL,
@@ -115,9 +116,9 @@ CREATE TABLE payments
 CREATE TABLE payments_details
 (
     payment_detail_id  SERIAL PRIMARY KEY,
-    payment_id         INT                                                                NOT NULL REFERENCES payments (payment_id),
-    type               VARCHAR(12) CHECK (type IN ('CONTRIBUCION', 'COMPRA', 'PRESTAMO')) NOT NULL,
-    amount_paid        NUMERIC(10, 2)                                                     NOT NULL,
+    payment_id         INT            NOT NULL REFERENCES payments (payment_id),
+    charge_id          INT            NOT NULL REFERENCES charges (charge_id),
+    amount_paid        NUMERIC(10, 2) NOT NULL,
     number_installment INT DEFAULT 0
 );
 
