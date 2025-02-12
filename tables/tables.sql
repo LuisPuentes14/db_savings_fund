@@ -1,4 +1,5 @@
--- Tabla que almacena la información de los empleados
+DROP SCHEMA IF EXISTS public CASCADE;
+CREATE SCHEMA public;
 
 CREATE TABLE document_type
 (
@@ -6,20 +7,24 @@ CREATE TABLE document_type
     name             VARCHAR(100) NOT NULL
 );
 
+-- Tabla que almacena la información de los empleados
 CREATE TABLE employees
 (
     employee_id          SERIAL PRIMARY KEY,
-    name                 VARCHAR(100)   NOT NULL,
-    document_number      VARCHAR(100)   NOT NULL UNIQUE,
-    document_type_id     INT            NOT NULL REFERENCES document_type (document_type_id),
-    phone                VARCHAR(20)    NOT NULL,
-    address              VARCHAR(255)   NOT NULL,
-    email                VARCHAR(255)   NOT NULL,
-    monthly_contribution NUMERIC(10, 2) NOT NULL,
-    hire_date            TIMESTAMP      NOT NULL,
+    name                 VARCHAR(100) NOT NULL,
+    document_number      VARCHAR(100) NOT NULL UNIQUE,
+    document_type_id     INT          NOT NULL REFERENCES document_type (document_type_id),
+    phone                VARCHAR(20)  NOT NULL,
+    address              VARCHAR(255) NOT NULL,
+    email                VARCHAR(255) NOT NULL,
+    monthly_contribution NUMERIC(10, 2) DEFAULT 0,
+    deposit              NUMERIC(10, 2) DEFAULT 0,
+    contribution         NUMERIC(10, 2) DEFAULT 0,
+    savings              NUMERIC(10, 2) DEFAULT 0,
+    hire_date            TIMESTAMP    NOT NULL,
     created_by           VARCHAR(255),
     updated_by           VARCHAR(255),
-    created_date         TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_date         TIMESTAMP      DEFAULT CURRENT_TIMESTAMP,
     update_date          TIMESTAMP
 );
 
@@ -67,6 +72,7 @@ CREATE TABLE loan_types
 CREATE TABLE loans
 (
     loan_id      SERIAL PRIMARY KEY,
+    loan_type_id INT REFERENCES loan_types (loan_type_id),
     employee_id  INT            NOT NULL,
     granted_date DATE           NOT NULL,
     loan_amount  NUMERIC(10, 2) NOT NULL,
@@ -100,11 +106,27 @@ CREATE TABLE loan_purchases
 CREATE TABLE payments
 (
     payment_id   SERIAL PRIMARY KEY,
-    employee_id  INT                                                              NOT NULL,
-    payment_date DATE                                                             NOT NULL,
-    amount_paid  NUMERIC(10, 2)                                                   NOT NULL,
-    type         VARCHAR(12) CHECK (type IN ('contribution', 'purchase', 'loan')) NOT NULL,
-    reference_id INT                                                              NOT NULL, -- Puede referirse a una compra o un préstamo
+    employee_id  INT            NOT NULL,
+    payment_date DATE           NOT NULL,
+    amount_paid  NUMERIC(10, 2) NOT NULL,
     FOREIGN KEY (employee_id) REFERENCES employees (employee_id) ON DELETE CASCADE
 );
+
+CREATE TABLE payments_details
+(
+    payment_detail_id  SERIAL PRIMARY KEY,
+    payment_id         INT                                                                NOT NULL REFERENCES payments (payment_id),
+    type               VARCHAR(12) CHECK (type IN ('CONTRIBUCION', 'COMPRA', 'PRESTAMO')) NOT NULL,
+    amount_paid        NUMERIC(10, 2)                                                     NOT NULL,
+    number_installment INT DEFAULT 0
+);
+
+CREATE TABLE parameters
+(
+    start_date INT,
+    end_date   INT
+);
+
+--TODO AGREGA TABLA TIPOS DE COBROS Y AGREGAR COLUMNA SI ES PRETAAMOS
+
 
