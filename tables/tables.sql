@@ -18,8 +18,8 @@ CREATE TABLE employees
     address              VARCHAR(255) NOT NULL,
     email                VARCHAR(255) NOT NULL,
     monthly_contribution NUMERIC(10, 2) DEFAULT 0,
-    deposit              NUMERIC(10, 2) DEFAULT 0,
-    contribution         NUMERIC(10, 2) DEFAULT 0,
+    deposit              NUMERIC(10, 2) DEFAULT 0, -- 40 porciento de la contribucion
+    contribution         NUMERIC(10, 2) DEFAULT 0, -- 60 porciento de la contribucion
     savings              NUMERIC(10, 2) DEFAULT 0,
     hire_date            TIMESTAMP    NOT NULL,
     created_by           VARCHAR(255),
